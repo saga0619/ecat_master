@@ -359,14 +359,14 @@ OSAL_THREAD_FUNC_RT ecatthread(void *ptr)
             wkc = ec_receive_processdata(200);
             for (int slave = 1; slave <= ec_slavecount; slave++)
             {
-                if (controlWordGenerate(rxPDO[slave - 1]->statusWord, &txPDO[slave - 1]->controlWord))
+                if (controlWordGenerate(rxPDO[slave - 1].statusWord, &txPDO[slave - 1].controlWord))
                 {
                     reachedInitial[slave - 1] = true;
                 }
 
                 if (reachedInitial[slave - 1])
                 {
-                    q_elmo_[START_N + slave - 1] = rxPDO[slave - 1]->positionActualValue * CNT2RAD[START_N + slave - 1] * elmo_axis_direction[START_N + slave - 1];
+                    q_elmo_[START_N + slave - 1] = rxPDO[slave - 1].positionActualValue * CNT2RAD[START_N + slave - 1] * elmo_axis_direction[START_N + slave - 1];
                     hommingElmo[START_N + slave - 1] =
                         (((uint32_t)ec_slave[slave].inputs[6]) & ((uint32_t)1));
                     q_dot_elmo_[START_N + slave - 1] =
@@ -388,7 +388,7 @@ OSAL_THREAD_FUNC_RT ecatthread(void *ptr)
                     {
                         hommingElmo[START_N + slave - 1] = !hommingElmo[START_N + slave - 1];
                     }
-                    txPDO[slave - 1]->maxTorque = (uint16)500; // originaly 1000
+                    txPDO[slave - 1].maxTorque = (uint16)500; // originaly 1000
                 }
             }
 
