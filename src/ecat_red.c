@@ -38,8 +38,8 @@ boolean inOP;
 uint8 currentgroup = 0;
 bool reachedInitial[ELMO_DOF] = {false};
 
-struct elmo_gold_rx *rxPDO[ELMO_DOF];
-struct elmo_gold_tx *txPDO[ELMO_DOF];
+struct elmo_gold_rx rxPDO[ELMO_DOF];
+struct elmo_gold_tx txPDO[ELMO_DOF];
 
 //Data Layer//
 //Receiver
@@ -136,7 +136,7 @@ void redtest(char *ifname, char *ifname2)
             }
 
             //printf("ELMO %d : config init\n", g_init_args.ecat_device);
-            ec_config_init(&IOmap);
+            ec_config_map(&IOmap);
 
             /* wait for all slaves to reach SAFE_OP state */
             ec_statecheck(0, EC_STATE_SAFE_OP, EC_TIMEOUTSTATE);
